@@ -8,7 +8,7 @@ import lombok.Setter;
 @Table(name = "coffee_menu")
 @Setter
 @Getter
-public class MenuModel {
+public class Menu {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,6 +1,6 @@
 package com.coffee.app.controllers;
 
-import com.coffee.app.model.MenuModel;
+import com.coffee.app.model.Menu;
 import com.coffee.app.repositiory.MenuItemRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,12 +17,12 @@ public class MenuController {
     }
 
     @PostMapping("/add")
-    public void addCoffee(@RequestBody MenuModel menuItem) {
+    public void addCoffee(@RequestBody Menu menuItem) {
         menuItemRepository.save(menuItem);
     }
 
     @GetMapping("/all")
-    public List<MenuModel> getCoffeeList() {
+    public List<Menu> getCoffeeList() {
         return menuItemRepository.findAll();
     }
 }
