@@ -14,8 +14,7 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("*")   // разрешаем все источники для теста
-                        .allowedMethods("*");
+                        .allowedOrigins("http://localhost:3000");
             }
         };
     }
