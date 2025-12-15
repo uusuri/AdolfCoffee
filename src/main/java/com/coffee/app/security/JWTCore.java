@@ -26,4 +26,13 @@ public class JWTCore {
         }
         return "";
     }
+
+    public String extractUsername(String jwt) {
+        return Jwts.parser()
+                .setSigningKey(jwtSecret)
+                .build()
+                .parseClaimsJws(jwt)
+                .getBody()
+                .getSubject();
+    }
 }
