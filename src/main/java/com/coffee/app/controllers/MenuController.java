@@ -1,7 +1,7 @@
 package com.coffee.app.controllers;
 
-import com.coffee.app.model.Menu;
-import com.coffee.app.repositiory.MenuItemRepository;
+import com.coffee.app.model.Coffee;
+import com.coffee.app.repositiory.CoffeeRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,19 +10,19 @@ import java.util.List;
 @RequestMapping("/coffee")
 @CrossOrigin(origins = "*")
 public class MenuController {
-    private final MenuItemRepository menuItemRepository;
+    private final CoffeeRepository coffeeRepository;
 
-    public MenuController(MenuItemRepository menuItemRepository) {
-        this.menuItemRepository = menuItemRepository;
+    public MenuController(CoffeeRepository coffeeRepository) {
+        this.coffeeRepository = coffeeRepository;
     }
 
     @PostMapping("/add")
-    public void addCoffee(@RequestBody Menu menuItem) {
-        menuItemRepository.save(menuItem);
+    public void addCoffee(@RequestBody Coffee menuItem) {
+        coffeeRepository.save(menuItem);
     }
 
     @GetMapping("/all")
-    public List<Menu> getCoffeeList() {
-        return menuItemRepository.findAll();
+    public List<Coffee> getCoffeeList() {
+        return coffeeRepository.findAll();
     }
 }

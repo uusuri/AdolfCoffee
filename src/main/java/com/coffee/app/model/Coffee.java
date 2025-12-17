@@ -5,10 +5,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "coffee_menu")
+@Table(name = "coffee")
 @Setter
 @Getter
-public class Menu {
+public class Coffee {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
