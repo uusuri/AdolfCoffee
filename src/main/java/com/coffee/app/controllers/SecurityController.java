@@ -1,11 +1,11 @@
 package com.coffee.app.controllers;
 
+import com.coffee.app.model.Role;
 import com.coffee.app.model.User;
 import com.coffee.app.security.JWTCore;
 import com.coffee.app.repositiory.UserRepository;
 import com.coffee.app.security.SignupRequest;
 import com.coffee.app.security.SigninRequest;
-import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -51,6 +51,7 @@ public class SecurityController {
         user.setUsername(signupRequest.getUsername());
         user.setEmail(signupRequest.getEmail());
         user.setPassword(hashed);
+        user.setRole(Role.ROLE_USER);
         userRepository.save(user);
 
         return ResponseEntity.ok(user);
@@ -59,7 +60,7 @@ public class SecurityController {
 
     @PostMapping("/signin")
     ResponseEntity<?> signin(@RequestBody SigninRequest signinRequest) {
-        Authentication auth = null;
+        Authentication auth;
         try {
             auth = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(signinRequest.getUsername(), signinRequest.getPassword())

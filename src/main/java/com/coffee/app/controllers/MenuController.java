@@ -2,6 +2,7 @@ package com.coffee.app.controllers;
 
 import com.coffee.app.model.Coffee;
 import com.coffee.app.repositiory.CoffeeRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class MenuController {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('ADMIN')")
     public void addCoffee(@RequestBody Coffee menuItem) {
         coffeeRepository.save(menuItem);
     }
