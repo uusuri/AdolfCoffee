@@ -23,6 +23,17 @@ public class MenuController {
         coffeeRepository.save(menuItem);
     }
 
+    @PostMapping("/order")
+    @PreAuthorize("hasRole('USER')")
+    public void orderCoffee(@RequestParam String coffeeName) {
+        Coffee coffee = coffeeRepository.findByName(coffeeName);
+        if (coffee != null) {
+            coffeeRepository.save(coffee);
+        } else {
+            throw new RuntimeException("Coffee not found: " + coffeeName);
+        }
+    }
+
     @GetMapping("/all")
     public List<Coffee> getCoffeeList() {
         return coffeeRepository.findAll();

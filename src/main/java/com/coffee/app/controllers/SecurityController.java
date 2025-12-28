@@ -71,6 +71,5 @@ public class SecurityController {
         SecurityContextHolder.getContext().setAuthentication(auth);
         String jwt = jwtCore.generateToken(auth);
         return ResponseEntity.ok("jwt " + jwt);
-
     }
 }
