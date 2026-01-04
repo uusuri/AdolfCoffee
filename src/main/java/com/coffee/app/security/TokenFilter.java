@@ -26,10 +26,10 @@ public class TokenFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String jwt = null;
         String username = null;
-        UserDetails userDetails = null;
-        UsernamePasswordAuthenticationToken token = null;
+        String jwt = null;
+        UserDetails userDetails;
+        UsernamePasswordAuthenticationToken token;
 
         try {
             String authHeader = request.getHeader("Authorization");
@@ -40,9 +40,11 @@ public class TokenFilter extends OncePerRequestFilter {
 
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 userDetails = userDetailsService.loadUserByUsername(username);
-                token = new UsernamePasswordAuthenticationToken(
-                        userDetails, null);
-                SecurityContextHolder.getContext().setAuthentication(token);
+                if (jwt != null && jwtCore.isTokenValid(jwt, userDetails)) {
+                    token = new UsernamePasswordAuthenticationToken(
+                            userDetails, null, userDetails.getAuthorities());
+                    SecurityContextHolder.getContext().setAuthentication(token);
+                }
             }
 
         } catch (Exception e) {

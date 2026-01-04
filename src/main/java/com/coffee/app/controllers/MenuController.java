@@ -1,7 +1,7 @@
 package com.coffee.app.controllers;
 
-import com.coffee.app.model.Coffee;
-import com.coffee.app.repositiory.CoffeeRepository;
+import com.coffee.app.model.Drink;
+import com.coffee.app.repositiory.DrinkRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,31 +11,25 @@ import java.util.List;
 @RequestMapping("/coffee")
 @CrossOrigin(origins = "*")
 public class MenuController {
-    private final CoffeeRepository coffeeRepository;
+    private final DrinkRepository drinkRepository;
 
-    public MenuController(CoffeeRepository coffeeRepository) {
-        this.coffeeRepository = coffeeRepository;
-    }
-
-    @PostMapping("/add")
-    @PreAuthorize("hasRole('ADMIN')")
-    public void addCoffee(@RequestBody Coffee menuItem) {
-        coffeeRepository.save(menuItem);
+    public MenuController(DrinkRepository drinkRepository) {
+        this.drinkRepository = drinkRepository;
     }
 
     @PostMapping("/order")
-    @PreAuthorize("hasRole('USER')")
-    public void orderCoffee(@RequestParam String coffeeName) {
-        Coffee coffee = coffeeRepository.findByName(coffeeName);
-        if (coffee != null) {
-            coffeeRepository.save(coffee);
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public void orderCoffee(@RequestParam String drinkName) {
+        Drink drink = drinkRepository.findByName(drinkName);
+        if (drink != null) {
+            drinkRepository.save(drink);
         } else {
-            throw new RuntimeException("Coffee not found: " + coffeeName);
+            throw new RuntimeException("Coffee not found: " + drinkName);
         }
     }
 
     @GetMapping("/all")
-    public List<Coffee> getCoffeeList() {
-        return coffeeRepository.findAll();
+    public List<Drink> getDrinkList() {
+        return drinkRepository.findAll();
     }
 }

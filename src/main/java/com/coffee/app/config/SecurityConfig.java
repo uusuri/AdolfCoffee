@@ -49,7 +49,12 @@ public class SecurityConfig {
                         new CorsConfiguration().applyPermitDefaultValues())
                 )
                 .exceptionHandling(exceptions ->
-                        exceptions.authenticationEntryPoint((new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
+                        exceptions
+                                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                                .accessDeniedHandler((request, response, accessDeniedException) -> {
+                                    response.setStatus(HttpStatus.FORBIDDEN.value());
+                                    response.getWriter().write("Access Denied");
+                                })
                 )
                 .sessionManagement((session) ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)

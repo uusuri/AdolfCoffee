@@ -17,6 +17,7 @@ public class Drink {
     private Long id;
 
     private String name;
+
     private double basePrice;
 
     @ManyToOne
