@@ -167,6 +167,14 @@ public class AdminService {
         existing.setImage(bakery.getImage());
         existing.setDescription(bakery.getDescription());
 
+        // Обновляем аллергены
+        if (bakery.getAllergens() != null) {
+            existing.setAllergens(bakery.getAllergens());
+            log.info("Updated allergens for bakery {}: {}", id, bakery.getAllergens());
+        } else {
+            existing.setAllergens(null);
+        }
+
         return bakeryRepository.save(existing);
     }
 

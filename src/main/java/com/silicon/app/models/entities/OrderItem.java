@@ -1,7 +1,10 @@
 package com.silicon.app.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
@@ -10,6 +13,8 @@ import java.math.BigDecimal;
 @Table(name = "order_items")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +27,7 @@ public class OrderItem {
     private Bakery bakery;
 
     @ManyToOne
+    @JsonBackReference
     private Order order;
 
     private Integer quantity;

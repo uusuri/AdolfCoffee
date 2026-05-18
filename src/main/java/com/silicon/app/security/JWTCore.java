@@ -32,10 +32,12 @@ public class JWTCore {
 
         String username = userDetails != null ? userDetails.getUsername() : "anonymous";
         String role = userDetails != null ? userDetails.user().getRole().toString() : "";
+        Long userId = userDetails != null ? userDetails.user().getId() : null;
 
         return Jwts.builder()
                 .setSubject(username)
                 .claim("role", role)
+                .claim("userId", userId)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
                 .signWith(SignatureAlgorithm.HS512, getSigningKey())
@@ -56,6 +58,14 @@ public class JWTCore {
                 .parseClaimsJws(token)
                 .getBody()
                 .get("role", String.class);
+    }
+
+    public Long extractUserId(String token) {
+        return Jwts.parser()
+                .setSigningKey(getSigningKey())
+                .parseClaimsJws(token)
+                .getBody()
+                .get("userId", Long.class);
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {

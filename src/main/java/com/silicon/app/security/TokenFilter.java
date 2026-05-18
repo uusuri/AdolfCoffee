@@ -40,7 +40,7 @@ public class TokenFilter extends OncePerRequestFilter {
 
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 userDetails = userDetailsService.loadUserByUsername(username);
-                if (jwt != null && jwtCore.isTokenValid(jwt, userDetails)) {
+                if (jwtCore.isTokenValid(jwt, userDetails)) {
                     token = new UsernamePasswordAuthenticationToken(
                             userDetails, null, userDetails.getAuthorities());
                     SecurityContextHolder.getContext().setAuthentication(token);
